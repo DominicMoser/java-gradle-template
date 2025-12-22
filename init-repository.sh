@@ -16,6 +16,12 @@ if ! command -v npx >/dev/null 2>&1; then
   elif command -v dnf >/dev/null 2>&1; then
     # Fedora
     sudo dnf install -y nodejs npm
+  elif command -v pacman >/dev/null 2>&1; then
+    # Arch Linux
+    sudo pacman -Sy --noconfirm nodejs npm
+  elif command -v apk >/dev/null 2>&1; then
+    # Alpine Linux
+    sudo apk add --no-cache nodejs npm
   else
     echo "⚠️  Package manager not supported."
     echo "Please install Node.js manually: https://nodejs.org"
