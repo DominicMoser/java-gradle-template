@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 set -e
-
+git submodule update --init --recursive
 echo "🔍 Checking for npx..."
 
 if ! command -v npx >/dev/null 2>&1; then
