@@ -32,4 +32,4 @@ else
 fi
 
 echo "🚀 Running git-conventional-commits init..."
-npx git-conventional-commits init
+npx --yes git-conventional-commits init
