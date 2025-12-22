@@ -32,4 +32,5 @@ else
 fi
 
 echo "🚀 Running git-conventional-commits init..."
-npx --yes git-conventional-commits init
+npx --yes git-conventional-commits init -c ./toolkit/configs/git-conventional-commits.yaml
+
