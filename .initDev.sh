@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+
+# Execute this file after first cloning the repository.
+
 set -e
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd) || exit 1
@@ -37,3 +40,58 @@ fi
 
 echo "Setting git hooks"
 git config --local core.hooksPath ./toolkit/hooks
+
+# Move to repo root (safe for hooks & scripts)
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+cd "$REPO_ROOT" || exit 1
+
+# Detect existing Gradle build
+if [ -f build.gradle ] || \
+   [ -f build.gradle.kts ] || \
+   [ -f settings.gradle ] || \
+   [ -f settings.gradle.kts ] || \
+   [ -f gradlew ]; then
+  echo "✅ Gradle project already exists — skipping init"
+  exit 0
+fi
+
+if command -v gradle >/dev/null 2>&1; then
+  echo "✅ Gradle already installed"
+  exit 0
+fi
+
+echo "🔧 Installing Gradle..."
+
+if command -v brew >/dev/null 2>&1; then
+  # macOS
+  brew install gradle
+
+elif command -v apt-get >/dev/null 2>&1; then
+  # Debian / Ubuntu
+  sudo apt-get update
+  sudo apt-get install -y gradle
+
+elif command -v pacman >/dev/null 2>&1; then
+  # Arch Linux
+  sudo pacman -Sy --noconfirm gradle
+
+elif command -v apk >/dev/null 2>&1; then
+  # Alpine Linux
+  sudo apk add --no-cache gradle
+
+else
+  echo "❌ Unsupported platform. Install Gradle manually:"
+  echo "https://gradle.org/install/"
+  exit 1
+fi
+
+# Ensure Gradle is available
+if ! command -v gradle >/dev/null 2>&1; then
+  echo "❌ Gradle not found. Please install Gradle first."
+  exit 1
+fi
+
+echo "🚀 Initializing Gradle project..."
+gradle init --type basic --dsl groovy --project-name "$(basename "$REPO_ROOT")"
+
+echo "✅ Gradle initialized"
