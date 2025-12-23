@@ -41,5 +41,6 @@ then
   npx --yes git-conventional-commits commit-msg-hook "$1" -c toolkit/configs/git-conventional-commits.yaml
 fi
 EOF
+chmod +x ./.git/hooks/commit-msg
 
 
