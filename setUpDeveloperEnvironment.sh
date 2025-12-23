@@ -61,4 +61,4 @@ echo "$FILES" | xargs java -jar "$FORMATTER" --replace
 echo "$FILES" | xargs git add
 echo "✅ Java formatting complete"
 EOF
-chmod +x ./git/hooks/pre-commit
+chmod +x ./.git/hooks/pre-commit
