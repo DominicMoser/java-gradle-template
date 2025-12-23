@@ -40,7 +40,7 @@ fi
 
 echo "Setting git hooks"
 git config --local core.hooksPath ./toolkit/hooks
-
+git config --local commit.template ./toolkit/resources/git-commit-msg-template.txt
 # Move to repo root (safe for hooks & scripts)
 REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 cd "$REPO_ROOT" || exit 1
