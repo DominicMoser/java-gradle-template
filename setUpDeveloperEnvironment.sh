@@ -47,4 +47,18 @@ fi
 EOF
 chmod +x ./.git/hooks/commit-msg
 
-
+cat <<'EOF' >> ./.git/hooks/pre-commit
+#!/bin/sh
+set -e
+REPO_ROOT=$(git rev-parse --show-toplevel) || exit 0
+cd "$REPO_ROOT" || exit 1
+FORMATTER="toolkit/bin/google-java-format.jar"
+[ -f "$FORMATTER" ] || exit 0
+FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.java$' || true)
+[ -n "$FILES" ] || exit 0
+echo "🎨 Formatting Java files (google-java-format)..."
+echo "$FILES" | xargs java -jar "$FORMATTER" --replace
+echo "$FILES" | xargs git add
+echo "✅ Java formatting complete"
+EOF
+chmod +x ./git/hooks/pre-commit
