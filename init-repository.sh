@@ -32,5 +32,14 @@ else
 fi
 
 echo "🚀 Running git-conventional-commits init..."
-npx --yes git-conventional-commits init -c ./toolkit/configs/git-conventional-commits.yaml
+rm -rf ./.git/hooks/commit-msg
+cat <<'EOF' >> ./.git/hooks/commit-msg
+if command -v npx > /dev/null 2>&1
+then
+  # fix for windows systems
+  PATH="/c/Program Files/nodejs:$HOME/AppData/Roaming/npm/:$PATH"
+  npx --yes git-conventional-commits commit-msg-hook "$1" -c toolkit/configs/git-conventional-commits.yaml
+fi
+EOF
+
 
