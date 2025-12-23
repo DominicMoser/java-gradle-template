@@ -92,6 +92,6 @@ if ! command -v gradle >/dev/null 2>&1; then
 fi
 
 echo "🚀 Initializing Gradle project..."
-gradle init --type basic --dsl groovy --project-name "$(basename "$REPO_ROOT")"
+gradle init --project-name "$(basename "$REPO_ROOT")"
 
 echo "✅ Gradle initialized"
