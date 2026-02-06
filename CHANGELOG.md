@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/DominicMoser/java-gradle-template/compare/v1.3.0...v1.3.1) (2026-02-06)
+
+
+### Bug Fixes
+
+* readd submodule init to the init script ([deb0a89](https://github.com/DominicMoser/java-gradle-template/commit/deb0a89b8a452f73a98d2089218c2979294abb1d))
+
 # [1.3.0](https://github.com/DominicMoser/java-gradle-template/compare/v1.2.0...v1.3.0) (2026-02-06)
 
 
