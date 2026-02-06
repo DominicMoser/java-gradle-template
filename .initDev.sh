@@ -5,33 +5,4 @@
 set -e
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd) || exit 1
-cd "$SCRIPT_DIR" || exit 1
-
-git submodule update --init --recursive
-
-echo "Setting git hooks"
-git config --local core.hooksPath ./toolkit/hooks
-git config --local commit.template ./toolkit/resources/git-commit-msg-template.txt
-# Move to repo root (safe for hooks & scripts)
-REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
-cd "$REPO_ROOT" || exit 1
-
-# Detect existing Gradle build
-if [ -f build.gradle ] || \
-   [ -f build.gradle.kts ] || \
-   [ -f settings.gradle ] || \
-   [ -f settings.gradle.kts ]; then
-  echo "✅ Gradle project already exists — skipping init"
-  exit 0
-fi
-
-# Ensure Gradle is available
-if ! command -v ./gradlew >/dev/null 2>&1; then
-  echo "❌ Gradle not found. Please install Gradle first."
-  exit 1
-fi
-
-echo "🚀 Initializing Gradle project..."
-./gradlew init --project-name "$(basename "$REPO_ROOT")"
-
-echo "✅ Gradle initialized"
+sh "$SCRIPT_DIR/toolkit/scripts/initDevelopmentEnvironment.sh" "$SCRIPT_DIR"
