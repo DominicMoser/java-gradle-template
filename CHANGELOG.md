@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/DominicMoser/java-gradle-template/compare/v1.3.1...v1.3.2) (2026-02-06)
+
+
+### Bug Fixes
+
+* update toolkit ([34f0c85](https://github.com/DominicMoser/java-gradle-template/commit/34f0c85de05a5aa803a1a61331404d798aefcf65))
+
 ## [1.3.1](https://github.com/DominicMoser/java-gradle-template/compare/v1.3.0...v1.3.1) (2026-02-06)
 
 
