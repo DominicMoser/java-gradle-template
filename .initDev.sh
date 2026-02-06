@@ -49,40 +49,18 @@ cd "$REPO_ROOT" || exit 1
 if [ -f build.gradle ] || \
    [ -f build.gradle.kts ] || \
    [ -f settings.gradle ] || \
-   [ -f settings.gradle.kts ] || \
-   [ -f gradlew ]; then
+   [ -f settings.gradle.kts ]; then
   echo "✅ Gradle project already exists — skipping init"
   exit 0
 fi
 
-if ! command -v gradle >/dev/null 2>&1; then
-  echo "🔧 Installing Gradle..."
-  if command -v brew >/dev/null 2>&1; then
-    # macOS
-    brew install gradle
-  elif command -v apt-get >/dev/null 2>&1; then
-    # Debian / Ubuntu
-    sudo apt-get update
-    sudo apt-get install -y gradle
-  elif command -v pacman >/dev/null 2>&1; then
-    # Arch Linux
-    sudo pacman -Sy --noconfirm gradle
-  elif command -v apk >/dev/null 2>&1; then
-    # Alpine Linux
-    sudo apk add --no-cache gradle
-  else
-    echo "❌ Unsupported platform. Install Gradle manually:"
-    echo "https://gradle.org/install/"
-    exit 1
-  fi
-fi
 # Ensure Gradle is available
-if ! command -v gradle >/dev/null 2>&1; then
+if ! command -v ./gradlew >/dev/null 2>&1; then
   echo "❌ Gradle not found. Please install Gradle first."
   exit 1
 fi
 
 echo "🚀 Initializing Gradle project..."
-gradle init --project-name "$(basename "$REPO_ROOT")"
+./gradlew init --project-name "$(basename "$REPO_ROOT")"
 
 echo "✅ Gradle initialized"
